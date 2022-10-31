@@ -1,11 +1,32 @@
 const express = require('express')
 const app = express()
-const port = 4000
+const session = require('express-session')
+require('dotenv').config()
+const path = require('path')
 
-app.use(express.static('static'))
+const mysql = require('mysql2')
+const connection = mysql.createConnection({
+    host: 'localhost',
+    user: process.env.MYSQL_USERNAME,
+    password: process.env.MYSQL_PASSWORD,
+    database: 'testing_hotel'
+})
+
+connection.connect()
+try {
+    connection.query(`INSERT INTO test VALUES('Nayan', 01);`)
+} catch (error) {
+    console.log(error)
+}
+
+connection.end()
+
+app.use('/static', express.static('static'))
 
 app.get('/',(req,res) => {
-    res.send('Nice!!!')
+    res.sendFile(path.join(__dirname, 'public/index.html'));
 });
 
-app.listen(port, () => console.log('Connected on localhost:4000'))
+app.listen(process.env.PORT || 3000, function () {
+    console.log("Express server listening on localhost:%d in %s mode", this.address().port, app.settings.env);
+});

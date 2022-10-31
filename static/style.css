@@ -1,13 +1,45 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 
-*{
+:root {
+    --green-color: rgb(255, 57, 62);
+    --red-color: rgb(36, 158, 41);
+    --blue-color: rgb(37, 111, 170);
+    --yellow-color: rgb(215, 153, 51);
+    --font-default-color: #4a4e52;
+}
+
+.green-bg {
+    background: var(--green-color);
+}
+
+.red-bg {
+    background: var(--red-color);
+}
+
+.blue-bg {
+    background: var(--blue-color);
+}
+
+.yellow-bg {
+    background: var(--yellow-color);
+}
+
+.td-label {
+    border-radius: 10px;
+    padding: 0.2rem;
+    color: white;
+}
+
+* {
     font-family: 'Poppins', sans-serif;
     margin: 0;
     box-sizing: border-box;
 }
+
 body {
     background: linear-gradient(184deg, rgba(191, 212, 226, 1) 15%, rgba(50, 151, 177, 1) 92%);
     height: 100vh;
+    position: relative;
 }
 
 header {
@@ -20,76 +52,75 @@ header {
 
 }
 
-.logo{
+.logo {
     display: flex;
     align-items: inherit;
 }
 
-.logo span{
+.logo span {
     margin-right: 0.5rem;
     font-size: 2rem;
 }
 
-.sign-out-btn{
+.sign-out-btn {
     display: flex;
     align-items: inherit;
     font-weight: 400;
+    cursor: pointer;
 }
 
 .sign-out-btn span {
     margin-left: 0.5rem;
 }
 
-main{
+main {
     margin: 2rem;
     display: flex;
     justify-content: center;
     height: 80vh;
-    color: #1e1f20;
+    color: #4a4e52;
 }
 
-section{
+section {
     display: flex;
-    background: linear-gradient(
-        to right bottom,
-        rgba(255, 255, 255, 0.7),
-        rgba(255, 255, 255, 0.3)
-    );
+    background: linear-gradient(to right bottom,
+            rgba(255, 255, 255, 0.7),
+            rgba(255, 255, 255, 0.3));
     border-radius: 20px;
     width: 80%;
 }
 
 
-.options{
+.options {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
 
-    padding: 1rem;
+    padding: 1rem 1.5rem;
     /* flex: 1; */
     background: linear-gradient(to right bottom,
-                rgba(255, 255, 255, 0.7),
-                rgba(255, 255, 255, 0.3));
+            rgba(255, 255, 255, 0.7),
+            rgba(255, 255, 255, 0.3));
     border-radius: 20px;
 }
 
-.options div{
+.options div {
     display: flex;
     flex-direction: row;
     align-items: center;
-    font-size: 0.6rem;
+    font-size: 0.8rem;
     margin: 0.8rem 0rem;
     cursor: pointer;
-    padding: 0.4rem 0.2rem;
+    padding: 0.4rem;
     border-radius: 10px;
 }
 
-.options div:hover{
-    background-color: red;
+.options div:hover {
+    background-color: rgb(34 75 68);
     color: white;
 }
 
-.options div span{
+.options div span {
     margin-right: 5px;
 }
 
@@ -97,7 +128,7 @@ section{
 /* This is Dynamically Changed html */
 
 /* Reservation Section */
-.dynamic-content{
+.dynamic-content {
     flex: 2;
     display: flex;
     flex-direction: column;
@@ -106,8 +137,13 @@ section{
     padding: 1rem;
 }
 
-.dynamic-content::-webkit-scrollbar{
+.dynamic-content::-webkit-scrollbar {
     width: 0;
+}
+
+.dynamic-content h2,
+.reservation-submit-btn {
+    margin: 0rem 2rem;
 }
 
 .card {
@@ -122,7 +158,8 @@ section{
     box-shadow: 6px 6px 20px rgba(122, 122, 122, 0.212);
 }
 
-.room-info{
+
+.room-info {
     display: flex;
     flex-direction: column;
     padding: 1rem;
@@ -133,39 +170,51 @@ section{
     grid-template-columns: auto auto;
 }
 
-.room-form div{
+.room-form div {
     display: flex;
     flex-direction: column;
     width: 80%;
     margin: 0.5rem 0rem;
 }
 
-#room-type, #room-no, #check-in, #check-out,
-#fname, #lname, #email, #number, #id-card-type, #id-card-no, #address {
+#room-type,
+#room-no,
+#check-in,
+#check-out,
+#fname,
+#lname,
+#email,
+#number,
+#id-card-type,
+#id-card-no,
+#address,
+#city,
+#password {
     height: 30px;
     border-radius: 10px;
-    border: none;
-    border: 1px solid #1e1f20;
+    border: 1px solid var(--font-default-color);
     padding: 5px;
+    background: transparent;
+    outline: var(--yellow-color);
 }
 
 .room-price {
     margin-top: 10px;
 }
 
-.customer-form{
+.customer-form {
     display: grid;
     grid-template-columns: auto auto;
 }
 
-.customer-form div{
+.customer-form div {
     display: flex;
     flex-direction: column;
     width: 80%;
     margin: 0.5rem 0rem;
 }
 
-.reservation-submit-btn{
+.reservation-submit-btn {
     align-self: flex-end;
     display: grid;
     place-content: center;
@@ -181,25 +230,35 @@ section{
 /* End Reservation Section */
 
 
-.rooms-head-section{
+/* Rooms Section */
+.rooms-head-section {
     display: flex;
     justify-content: space-between;
 }
 
-.rooms-head-section button{
+.rooms-head-section button {
     width: 100px;
+    border: none;
+    border-radius: 10px;
+    background: var(--green-color);
+    color: white;
 }
 
-.rooms-search-section{
+.rooms-search-section {
     text-align: end;
     margin: 1rem 0rem;
 }
 
-.rooms-search-section input{
-    width: 100px;
+.rooms-search-section input {
+    width: 200px;
+    border-radius: 10px;
+    border: 1px solid #343a40;
+    padding: 0.2rem 1rem;
+    background: transparent;
+
 }
 
-.rooms-table-section{
+.rooms-table-section {
     align-self: center;
 }
 
@@ -210,12 +269,169 @@ table {
     overflow: hidden;
 }
 
-thead{
-    background-color: rgb(102, 211, 190);
+thead {
+    background-color: rgb(34 75 68);
     color: white;
 }
 
-th, td {
+th,
+td {
     border-bottom: 1px solid rgb(63, 120, 151);
     padding: 8px;
+}
+
+.rooms-in-table-btn,
+.payment-in-table-btn {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.rooms-in-table-btn span,
+.payment-in-table-btn span {
+    padding: 0.2rem;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    margin: 0px 5px;
+}
+
+.rooms-in-table-btn span:nth-child(1),
+.payment-in-table-btn span:nth-child(1) {
+    background: olivedrab
+}
+
+.rooms-in-table-btn span:nth-child(2) {
+    background: red;
+}
+
+/* Rooms Section End */
+
+.payment-in-table-btn span:nth-child(2) {
+    background: lightcoral;
+}
+
+/* Dashboard Section */
+
+.grid-card {
+    display: grid;
+    grid-template-columns: auto auto auto;
+}
+
+.grid-card .card,
+.card-dashboard div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-dashboard {
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.alert-bg {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    backdrop-filter: blur(5px);
+}
+
+.alert {
+    color: #4a4e52;
+    display: flex;
+    /* flex */
+    flex-direction: column;
+    align-items: center;
+    border-radius: 20px;
+    position: absolute;
+    top: 10%;
+    left: 40%;
+    padding: 2rem;
+    background: linear-gradient(to right bottom,
+            rgba(255, 255, 255, 0.8),
+            rgba(255, 255, 255, 0.9));
+    box-shadow: 6px 6px 20px rgba(122, 122, 122, 0.212);
+}
+
+.alert-close-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+}
+
+.alert-detail-section {
+    display: flex;
+    flex-direction: column;
+}
+
+.alert-detail-section div {
+    display: flex;
+    padding: 0.5rem;
+}
+
+.alert-detail-section div h4:nth-child(2) {
+    margin-left: 1rem;
+    font-weight: 400;
+}
+
+.alert-btn {
+    align-self: flex-end;
+    width: 80px;
+    margin-top: 1rem;
+    border-radius: 10px;
+    background: var(--green-color);
+    border: none;
+    color: white;
+    padding: 0.2rem;
+    cursor: pointer;
+
+}
+
+/* Login Section */
+
+.card-content {
+    justify-content: center;
+    flex: none;
+}
+
+.login-card {
+    align-items: center;
+}
+
+.login-card > * {
+    margin: 1rem;
+}
+
+.login-email,
+.login-password {
+    display: flex;
+    flex-direction: column;
+}
+
+.login-password input,
+.login-email input
+ {
+    width: 15rem !important;
+}
+
+
+.login-btn {
+    width: 10rem;
+    border-radius: 10px;
+    background: var(--green-color);
+    border: none;
+    color: white;
+    padding: 0.2rem;
+    cursor: pointer;
+    font-size: 1.2rem;
+}
+
+main:has(.card-content){
+    margin: 0;
+    align-items: center;
 }
