@@ -1,29 +1,30 @@
 const express = require('express')
 const app = express()
 const session = require('express-session')
-
 const bodyParser = require('body-parser')
+const middle_routers = require('./middle_routes/dashboard')
 
 require('dotenv').config()
 const path = require('path')
 
 const mysql = require('mysql2')
 
-const connection = mysql.createConnection({
-    host: 'localhost',
-    user: process.env.MYSQL_USERNAME,
-    password: process.env.MYSQL_PASSWORD,
-    database: 'testing_hotel'
-})
+app.use('/data', middle_routers)
+
+// const connection = mysql.createConnection({
+//     host: 'localhost',
+//     user: process.env.MYSQL_USERNAME,
+//     password: process.env.MYSQL_PASSWORD,
+//     database: 'testing_hotel'
+// })
 
 
 app.use(session({
     secret: 'Secrect text',
-    cookie: { maxAge: 300000 },
+    // cookie: { maxAge: 300000 },
     resave: false,
     saveUninitialized: false
 }))
-
 
 // connection.connect()
 // try {
@@ -40,32 +41,55 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
 
-app.use('/static', express.static('static'))
+app.use('/style', express.static('style'))
 
-app.get('/',(req,res) => {
-    res.sendFile(path.join(__dirname, 'public/index.html'));
+app.get('/', (req, res) => {
+    if (req.session.authenticated) {
+        res.redirect('/static')
+    } else {
+        res.sendFile(path.join(__dirname, 'public/index.html'));
+    }
 });
 
+app.use('/static', (req, res, next) => {
+    if (!req.session.authenticated) {
+        res.redirect('/')
+    } else {
+        next()
+    }
+}, express.static('static'))
 
 
 app.post('/login', (req, res) => {
-    console.log(req.body)
-    const { name, pass } = req.body
-    if( name && pass){
-        if(req.session.authenticated){
+    const { name, password } = req.body
+    if (name && password) {
+        if (req.session.authenticated) {
             res.json(req.session)
-        }else{
-            if( pass == 'admin' && name == 'admin'){
+        } else {
+            if ( password == process.env.password && name == process.env.name ) {
                 req.session.authenticated = true
                 req.session.user = {
-                    name, pass
+                    name, password
                 }
-                res.json(req.session)
-            }else{
-                res.status(403).json({ error: true})
+                res.json({
+                    error: false,
+                    message: 'Successfully Logged In'
+                })
+            } else {
+                res.json({ error: true })
             }
         }
-    } else res.status(403).json({ error: true })
+    } else res.json({ error: true })
+})
+
+app.get('/sign-out', (req, res) => {
+    if (req.session.authenticated) {
+        req.session.destroy();
+    }
+    res.json({
+        error: false,
+        message: 'Successfully Sign-Out'
+    });
 })
 
 

@@ -124,6 +124,10 @@ section {
     margin-right: 5px;
 }
 
+.active {
+    background-color: rgb(34 75 68);
+    color: white;
+}
 
 /* This is Dynamically Changed html */
 
@@ -189,7 +193,8 @@ section {
 #id-card-no,
 #address,
 #city,
-#password {
+#password,
+#name {
     height: 30px;
     border-radius: 10px;
     border: 1px solid var(--font-default-color);
@@ -407,14 +412,14 @@ td {
     margin: 1rem;
 }
 
-.login-email,
+.login-name,
 .login-password {
     display: flex;
     flex-direction: column;
 }
 
 .login-password input,
-.login-email input
+.login-name input
  {
     width: 15rem !important;
 }

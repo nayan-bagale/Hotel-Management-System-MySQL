@@ -8,45 +8,33 @@ function loadPage(href) {
 }
 
 $(window).on('load', function(){
-    let a = loadPage('/static/snippets/dashboard.html')
-    $('section').append(a);
+    let dash = $('.options').find('div')[0]
+    let _ = loadPage(`/static/snippets/${dash.id}.html`)
+    $(dash).addClass('active')
+    $('section').append(_);
+})
+
+$('.options').find('div').click( function (e) {
+    let _ = loadPage(`/static/snippets/${this.id}.html`)
+    $('.active').removeClass('active')
+    $(this).addClass('active')
+    $('section').append(_)
 })
 
 
-$('#reservation').click(function (e) { 
+$('body').on('click', '#payment-edit', function(e) {
+    $('#alert').show()
+})
+
+$('#alert-close').click( function (e) {
+    $('#alert').hide()
+})
+
+$('.sign-out-btn').click(async function (e) {
     e.preventDefault();
-    let a = loadPage('/static/snippets/reservation.html')
-
-    $('section').append(a);
-});
-
-$('#rooms').click(function (e) {
-    e.preventDefault();
-    let a = loadPage('/static/snippets/rooms.html')
-
-    $('section').append(a);
-});
-
-$('#payment').click(function (e) {
-    e.preventDefault();
-    let a = loadPage('/static/snippets/payment.html')
-
-    $('section').append(a);
-});
-
-
-
-$('#guest').click(function (e) {
-    e.preventDefault();
-    let a = loadPage('/static/snippets/guest.html')
-
-    $('section').append(a);
-});
-
-
-
-$('#dashboard').click(function (e) {
-    e.preventDefault();
-    let a = loadPage('/static/snippets/dashboard.html')
-    $('section').append(a);
-});
+    let responce = await fetch('/sign-out')
+    let result = await responce.json()
+    if(!result.error){
+        window.location.replace("/");
+    }
+})
