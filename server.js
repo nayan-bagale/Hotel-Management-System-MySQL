@@ -11,13 +11,30 @@ const mysql = require('mysql2')
 
 app.use('/data', middle_routers)
 
-// const connection = mysql.createConnection({
-//     host: 'localhost',
-//     user: process.env.MYSQL_USERNAME,
-//     password: process.env.MYSQL_PASSWORD,
-//     database: 'testing_hotel'
-// })
+const connection = mysql.createConnection({
+    host: 'localhost',
+    user: process.env.MYSQL_USERNAME,
+    password: process.env.MYSQL_PASSWORD,
+    database: 'hotel_management_system'
+})
 
+app.get('/sqldata', (req, res) => {
+
+    connection.connect( (err) => {
+        if (err) throw err
+        connection.query('select * from Guest;', function (err, result, fields) {
+            if (err) throw err;
+            console.log(result);
+        })
+    })
+
+    connection.end()
+
+    res.json({
+        success: true
+    })
+
+})
 
 app.use(session({
     secret: 'Secrect text',

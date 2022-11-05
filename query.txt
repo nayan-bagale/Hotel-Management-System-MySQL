@@ -1,0 +1,105 @@
+
+----------------------------------------------------------------------
+
+CREATE TABLE Room_types (
+    Room_type_id int NOT NULL AUTO_INCREMENT,
+    Room_type varchar(255) NOT NULL,
+    PRIMARY KEY (Room_type_id)
+);
+
+INSERT INTO Room_types (Room_type) VALUES ('Single Bed');
+
+----------------------------------------------------------------------
+
+CREATE TABLE Rooms (
+    Room_No int NOT NULL,
+    Room_type_id int,
+    PRIMARY KEY (Room_No),
+    FOREIGN KEY (Room_type_id) REFERENCES Room_types(Room_type_id)
+);
+INSERT INTO Rooms (Room_No, Room_type_id) VALUES (100, 1);
+
+----------------------------------------------------------------------
+
+SELECT Rooms.Room_No, Room_types.Room_type, Room_types.cost
+FROM Rooms
+INNER JOIN Room_types ON Rooms.Room_type_id=Room_types.Room_type_id;
+
+----------------------------------------------------------------------
+
+ALTER TABLE Room_types ADD Cost int;
+
+UPDATE Room_types SET Cost = 800 WHERE Room_type_id = 1;
+
+----------------------------------------------------------------------
+
+CREATE TABLE Guest (
+    Guest_id int NOT NULL AUTO_INCREMENT,
+    First_name varchar(255) NOT NULL,
+    Last_name varchar(255) NOT NULL,
+    Email varchar(255) NOT NULL,
+    Contact_number BIGINT NOT NULL,
+    ID_card_type varchar(255) NOT NULL,
+    ID_card_Number varchar(255) NOT NULL,
+    Residential_address varchar(255),
+    City varchar(255) NOT NULL,
+    PRIMARY KEY (Guest_id)
+);
+
+ALTER TABLE Guest MODIFY Contact_number BIGINT NOT NULL;
+
+INSERT INTO Guest (First_name, Last_name, Email, Contact_number, ID_card_type, ID_card_Number, Residential_address, City ) 
+VALUES ('Nayan','Bagale','nvbagale@gmail.com','9420270488','Pan Card','FOXPB9172L','Krishna Nagari, Kaulkhed', 'Akola');
+
+VALUES ('Niraj','Duratkar','niraj@gmail.com','1234567890','Pan Card','FOXXXXXXXX','Murtizapur', 'Murtizapur');
+
+----------------------------------------------------------------------
+
+CREATE TABLE Reservation (
+    Reservation_id int NOT NULL AUTO_INCREMENT,
+    Guest_id int NOT NULL,
+    Room_No int NOT NULL,
+    Reservation_date Date,
+    Check_in Date,
+    Check_out Date,
+    PRIMARY KEY (Reservation_id),
+    FOREIGN KEY (Guest_id) REFERENCES Guest(Guest_id),
+    FOREIGN KEY (Room_No) REFERENCES Rooms(Room_No)
+);
+
+INSERT INTO Reservation (Guest_id, Room_No, Reservation_date) 
+VALUES (1, 401, '1990-12-12');
+
+ALTER TABLE table_name
+ADD column_name datatype;
+
+----------------------------------------------------------------------
+
+SELECT Reservation.Room_No, Room_types.Room_type, Reservation.Reservation_date, Reservation.Check_in, Reservation.Check_out 
+FROM Reservation
+JOIN Rooms 
+ON Reservation.Room_No=Rooms.Room_No
+JOIN Room_types 
+ON Rooms.Room_type_id=Room_types.Room_type_id;
+
+----------------------------------------------------------------------
+
+CREATE TABLE Payments (
+    Payment_id int NOT NULL AUTO_INCREMENT,
+    Reservation_id int NOT NULL,
+    Guest_id int NOT NULL,
+    First_name varchar(255) NOT NULL,
+    Last_name varchar(255) NOT NULL,
+    Remaining BIGINT,
+    PRIMARY KEY (Payment_id),
+    FOREIGN KEY (Reservation_id) REFERENCES Reservation(Reservation_id),
+    FOREIGN KEY (Guest_id) REFERENCES Guest(Guest_id)
+);
+
+INSERT INTO Payments (Reservation_id, Guest_id, First_name, Last_name, Remaining) 
+VALUES (1, 1, 'Nayan', 'Bagale', 3000);
+
+VALUES (2, 2, 'Niraj', 'Duratkar', 0);
+
+----------------------------------------------------------------------
+
