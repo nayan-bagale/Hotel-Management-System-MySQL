@@ -2,14 +2,12 @@ const express = require('express')
 const app = express()
 const session = require('express-session')
 const bodyParser = require('body-parser')
-const middle_routers = require('./middle_routes/dashboard')
+const middle_routers = require('./middle_routes/middleroutes')
 
 require('dotenv').config()
 const path = require('path')
 
 const mysql = require('mysql2')
-
-app.use('/data', middle_routers)
 
 const connection = mysql.createConnection({
     host: 'localhost',
@@ -57,6 +55,8 @@ app.use(bodyParser.urlencoded({ extended: false }))
 
 // parse application/json
 app.use(bodyParser.json())
+
+app.use('/data', middle_routers)
 
 app.use('/style', express.static('style'))
 

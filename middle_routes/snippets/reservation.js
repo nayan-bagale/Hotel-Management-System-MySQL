@@ -1,4 +1,7 @@
-<div class="dynamic-content">
+
+module.exports = template = () =>{
+
+    return `<div class="dynamic-content">
     <h2>Booking</h2>
     <div class="card">
         <h3>Room Information:</h3>
@@ -92,4 +95,7 @@
     <div class="reservation-submit-btn" id="reservation-submit-btn">
         Submit
     </div>
-</div>
+            </div>`
+
+}
+

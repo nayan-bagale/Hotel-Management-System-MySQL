@@ -19,6 +19,9 @@ CREATE TABLE Rooms (
 );
 INSERT INTO Rooms (Room_No, Room_type_id) VALUES (100, 1);
 
+ALTER TABLE Rooms ADD Status varchar(255);
+
+UPDATE Rooms SET Status='Available';
 ----------------------------------------------------------------------
 
 SELECT Rooms.Room_No, Room_types.Room_type, Room_types.cost
@@ -62,25 +65,28 @@ CREATE TABLE Reservation (
     Reservation_date Date,
     Check_in Date,
     Check_out Date,
+    Total_days int,
     PRIMARY KEY (Reservation_id),
     FOREIGN KEY (Guest_id) REFERENCES Guest(Guest_id),
     FOREIGN KEY (Room_No) REFERENCES Rooms(Room_No)
 );
 
-INSERT INTO Reservation (Guest_id, Room_No, Reservation_date) 
-VALUES (1, 401, '1990-12-12');
-
-ALTER TABLE table_name
-ADD column_name datatype;
+INSERT INTO Reservation (Guest_id, Room_No, Reservation_date) VALUES (1, 401, '1990-12-12');
 
 ----------------------------------------------------------------------
 
-SELECT Reservation.Room_No, Room_types.Room_type, Reservation.Reservation_date, Reservation.Check_in, Reservation.Check_out 
-FROM Reservation
-JOIN Rooms 
+SELECT Rooms.Room_No, Room_types.Room_type, Rooms.Status, Reservation.Check_in, Reservation.Check_out 
+FROM Rooms
+LEFT JOIN Room_types 
+ON Rooms.Room_type_id=Room_types.Room_type_id
+LEFT JOIN Reservation 
 ON Reservation.Room_No=Rooms.Room_No
-JOIN Room_types 
-ON Rooms.Room_type_id=Room_types.Room_type_id;
+GROUP BY Room_No;
+
+
+SELECT Room_No, Status FROM Rooms
+UNION
+SELECT Check_in, Check_out FROM Reservation;
 
 ----------------------------------------------------------------------
 
@@ -91,10 +97,13 @@ CREATE TABLE Payments (
     First_name varchar(255) NOT NULL,
     Last_name varchar(255) NOT NULL,
     Remaining BIGINT,
+    Payed_amount BIGINT,
     PRIMARY KEY (Payment_id),
     FOREIGN KEY (Reservation_id) REFERENCES Reservation(Reservation_id),
     FOREIGN KEY (Guest_id) REFERENCES Guest(Guest_id)
 );
+
+ALTER TABLE Payments ADD Payed_amount BIGINT;
 
 INSERT INTO Payments (Reservation_id, Guest_id, First_name, Last_name, Remaining) 
 VALUES (1, 1, 'Nayan', 'Bagale', 3000);
@@ -103,3 +112,6 @@ VALUES (2, 2, 'Niraj', 'Duratkar', 0);
 
 ----------------------------------------------------------------------
 
+DELETE FROM Guest WHERE Guest_id=3;
+
+DELETE FROM Reservation WHERE Reservation_id=3;
