@@ -7,32 +7,6 @@ const middle_routers = require('./middle_routes/middleroutes')
 require('dotenv').config()
 const path = require('path')
 
-const mysql = require('mysql2')
-
-const connection = mysql.createConnection({
-    host: 'localhost',
-    user: process.env.MYSQL_USERNAME,
-    password: process.env.MYSQL_PASSWORD,
-    database: 'hotel_management_system'
-})
-
-app.get('/sqldata', (req, res) => {
-
-    connection.connect( (err) => {
-        if (err) throw err
-        connection.query('select * from Guest;', function (err, result, fields) {
-            if (err) throw err;
-            console.log(result);
-        })
-    })
-
-    connection.end()
-
-    res.json({
-        success: true
-    })
-
-})
 
 app.use(session({
     secret: 'Secrect text',
@@ -41,13 +15,6 @@ app.use(session({
     saveUninitialized: false
 }))
 
-// connection.connect()
-// try {
-//     connection.query(`INSERT INTO test VALUES('Nayan', 01);`)
-// } catch (error) {
-//     console.log(error)
-// }
-// connection.end()
 
 
 // parse application/x-www-form-urlencoded
@@ -62,19 +29,19 @@ app.use('/style', express.static('style'))
 
 app.get('/', (req, res) => {
     if (req.session.authenticated) {
-        res.redirect('/static')
+        res.redirect('/admin')
     } else {
         res.sendFile(path.join(__dirname, 'public/index.html'));
     }
 });
 
-app.use('/static', (req, res, next) => {
+app.use('/admin', (req, res) => {
     if (!req.session.authenticated) {
         res.redirect('/')
     } else {
-        next()
+        res.sendFile(path.join(__dirname, 'private/index.html'));
     }
-}, express.static('static'))
+})
 
 
 app.post('/login', (req, res) => {

@@ -80,7 +80,7 @@ module.exports = template = () =>{
             </div>
             <div>
                 <label for="id-card-no">Selected ID Card Number</label>
-                <input type="number" name="id-card-no" id="id-card-no" required>
+                <input type="text" name="id-card-no" id="id-card-no" required>
             </div>
             <div>
                 <label for="address">Residential Address</label>

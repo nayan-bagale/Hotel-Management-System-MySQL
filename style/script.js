@@ -9,6 +9,7 @@ function loadPage(href) {
         alert(_.message)
         if(_.error){
             window.location.replace("/");
+            return
         }
     } catch (error) {
         console.log(error)
@@ -76,7 +77,10 @@ $('body').on('change', '#room-form', function (e) {
 
 })
 
-$('body').on('change', '#room-type', function(e) {
+$('body').on('change', '#room-type', async function(e) {
+
+
+
     let options = (value) => {
         $('#room-no').empty();
         let template;
@@ -147,6 +151,18 @@ $('body').on('change', '#room-type', function(e) {
             options()
     }
     $('#price').text(price)
+
+    const responce = await fetch('', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ value: value})
+    })
+
+    const data = await responce.json()
+    console.log(data)
+
 })
 
 // Reservation Section
