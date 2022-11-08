@@ -4,7 +4,7 @@ const session = require('express-session')
 const bodyParser = require('body-parser')
 const middle_routers = require('./middle_routes/middleroutes')
 
-require('dotenv').config()
+require('dotenv').config({ path: "./vars/.env" })
 const path = require('path')
 
 
