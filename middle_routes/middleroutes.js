@@ -47,7 +47,7 @@ router.get('/reservation', Authentication, async (req, res) => {
 })
 
 router.post('/booking', Authentication, async (req, res) => {
-    // console.log(await booking(req.body))
+    console.log(await booking(req.body))
     console.log(req.body)
     res.json({
         error: false,

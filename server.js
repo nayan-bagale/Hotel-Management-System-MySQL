@@ -9,7 +9,7 @@ const path = require('path')
 
 
 app.use(session({
-    secret: 'Secrect text',
+    secret: 'Secret text',
     // cookie: { maxAge: 300000 },
     resave: false,
     saveUninitialized: false

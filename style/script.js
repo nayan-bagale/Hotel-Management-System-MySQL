@@ -12,10 +12,10 @@ function loadPage(href) {
             return
         }
     } catch (error) {
-        console.log(error)
+        // console.log(error)
+        return xmlhttp.responseText;
     }
     
-    return xmlhttp.responseText;
 }
 
 $(window).on('load', function(){
