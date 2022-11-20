@@ -33,10 +33,6 @@ $('.options').find('div').click( function (e) {
 })
 
 
-$('body').on('click', '#payment-edit', function(e) {
-    $('#alert').show()
-})
-
 $('#alert-close').click( function (e) {
     $('#alert').hide()
 })
@@ -78,8 +74,6 @@ $('body').on('change', '#room-form', function (e) {
 })
 
 $('body').on('change', '#room-type', async function(e) {
-
-
 
     let options = (value) => {
         $('#room-no').empty();
@@ -220,4 +214,11 @@ $('body').on('click', '#reservation-submit-btn', async function(e) {
     const data = await responce.json()
     console.log(data)
 
+})
+
+//payemnts
+
+$('body').on('click', '#payment-edit', function (e) {
+    
+    $('#alert').show()
 })

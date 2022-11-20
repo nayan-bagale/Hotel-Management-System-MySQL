@@ -14,6 +14,7 @@ INSERT INTO Room_types (Room_type) VALUES ('Single Bed');
 CREATE TABLE Rooms (
     Room_No int NOT NULL,
     Room_type_id int,
+    Status varchar(255),
     PRIMARY KEY (Room_No),
     FOREIGN KEY (Room_type_id) REFERENCES Room_types(Room_type_id)
 );
@@ -115,3 +116,20 @@ VALUES (2, 2, 'Niraj', 'Duratkar', 0);
 DELETE FROM Guest WHERE Guest_id=3;
 
 DELETE FROM Reservation WHERE Reservation_id=3;
+
+
+CREATE VIEW [Brazil Customers] AS
+SELECT CustomerName, ContactName
+FROM Customers
+WHERE Country = 'Brazil';
+
+CREATE TABLE std (
+    std_id int NOT NULL AUTO_INCREMENT,
+    name varchar(255),
+    maths int,
+    science int,
+    english int,
+    total_marks int,
+    percentage int,
+    PRIMARY KEY (std_id)
+);

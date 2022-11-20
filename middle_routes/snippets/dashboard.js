@@ -4,6 +4,7 @@ const formatDate = require('../date')
 
 async function sqldata() {
     const current_date = formatDate(new Date(), 'yyyy-mm-dd')
+    
     const total_rooms = await pool.query('select count(*) from rooms')
     const pending_paymens = await pool.query('select count(*) from payments where Remaining > 0')
     const booked_rooms = await pool.query(`select count(*) from Rooms where Status = 'Booked'`)
