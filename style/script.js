@@ -146,16 +146,6 @@ $('body').on('change', '#room-type', async function(e) {
     }
     $('#price').text(price)
 
-    const responce = await fetch('', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ value: value})
-    })
-
-    const data = await responce.json()
-    console.log(data)
 
 })
 
@@ -212,6 +202,10 @@ $('body').on('click', '#reservation-submit-btn', async function(e) {
     })
 
     const data = await responce.json()
+
+    if(!data.error){
+        alert(data.message)
+    }
     console.log(data)
 
 })
